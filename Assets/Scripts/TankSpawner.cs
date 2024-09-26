@@ -8,13 +8,12 @@ public class TankSpawner : MonoBehaviour
 
     private void Start()
     {
-        Instantiate(tankPrefab, transform.position, Quaternion.identity) ;
+        CreateTank();
     }
 
     private void CreateTank()
     {
-        TankModel tankModel = new TankModel();
+        TankModel tankModel = new TankModel(20, 60);
         TankController tankControler = new TankController(tankModel, tankPrefab);
-
     }
 }
