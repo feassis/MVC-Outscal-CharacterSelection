@@ -166,6 +166,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tankPrefab: {fileID: 6798168224089657816, guid: 56ed43c66b062f847a9d9f7f1720e9e2,
     type: 3}
+  tankList:
+  - tankType: 1
+    movementSpeed: 30
+    rotationSpeed: 75
+    Color: {fileID: 2100000, guid: c39933e60e73205419d1f79a2af1fdac, type: 2}
+  - tankType: 2
+    movementSpeed: 10
+    rotationSpeed: 50
+    Color: {fileID: 2100000, guid: ff21ff0ea9b18924bb1fdfbb0e58f5cb, type: 2}
+  - tankType: 3
+    movementSpeed: 60
+    rotationSpeed: 120
+    Color: {fileID: 2100000, guid: 463052f3f7389124f9e7b34b0b931d0d, type: 2}
+  - tankType: 4
+    movementSpeed: 40
+    rotationSpeed: 180
+    Color: {fileID: 2100000, guid: 6221f2fbc7212d94cb9c069ee262d824, type: 2}
 --- !u!1 &1179543937
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ public class TankView : MonoBehaviour
     private float movement;
     private float rotation;
     [field: SerializeField] public Rigidbody Rb { get; private set; }
+    [field: SerializeField] public MeshRenderer[] childs {  get; private set; }
 
     private void Start()
     {
@@ -39,6 +40,14 @@ public class TankView : MonoBehaviour
         if(rotation != 0)
         {
             this.tankController.Rotate(rotation, tankController.GetTankModel().rotationSpeed);
+        }
+    }
+
+    public void ChangeColor(Material color)
+    {
+        for(int i = 0; i < childs.Length; i++)
+        {
+            childs[i].material = color;
         }
     }
 }

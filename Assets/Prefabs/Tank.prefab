@@ -128,6 +128,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Rb>k__BackingField: {fileID: 1977787392149934990}
+  <childs>k__BackingField:
+  - {fileID: 7126422801746698962}
+  - {fileID: 7126422801746698964}
+  - {fileID: 7126422801746698970}
+  - {fileID: 7126422801746698960}
 --- !u!54 &1977787392149934990
 Rigidbody:
   m_ObjectHideFlags: 0
