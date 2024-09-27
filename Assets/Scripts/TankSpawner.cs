@@ -20,13 +20,15 @@ public class TankSpawner : MonoBehaviour
 
     private void Start()
     {
-        CreateTank();
+        
     }
 
-    private void CreateTank()
+    public void CreateTank(TankTypes tankType)
     {
-        TankModel tankModel = new TankModel(tankList[0].tankType, tankList[0].movementSpeed, 
-            tankList[0].rotationSpeed, tankList[0].Color);
+        Tank tank = tankList.Find(t => t.tankType == tankType);
+
+        TankModel tankModel = new TankModel(tank.tankType, tank.movementSpeed, 
+            tank.rotationSpeed, tank.Color);
         TankController tankControler = new TankController(tankModel, tankPrefab);
     }
 }
