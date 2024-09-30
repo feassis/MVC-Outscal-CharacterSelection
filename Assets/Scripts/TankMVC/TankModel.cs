@@ -14,6 +14,13 @@ public class TankModel
 
     public float MaxChargeTime { get; private set; } = 0.75f;
 
+    public float BlastRadious {  get; private set; }
+    public int Piercing {  get; private set; }
+    public int Damage {  get; private set; }
+
+    public bool IsHommingMissle { get; private set; }
+    public bool AffectedByGravity { get; private set; }
+
 
     public TankModel(Tank tank)
     {
@@ -24,6 +31,11 @@ public class TankModel
         this.MinShootingForce = tank.MinShootingForce;
         this.MaxShootingForce = tank.MaxShooingForce;
         this.MaxChargeTime = tank.MaxChargeTime;
+        this.BlastRadious = tank.BlastRadious;
+        this.Piercing = tank.Piercing;
+        this.Damage = tank.Damage;
+        this.IsHommingMissle = tank.IsHommingMissle;
+        this.AffectedByGravity = tank.AffectedByGravity;
     }
 
     public void SetTankController(TankController tankController)

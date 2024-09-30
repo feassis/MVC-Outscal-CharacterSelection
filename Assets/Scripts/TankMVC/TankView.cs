@@ -12,6 +12,8 @@ public class TankView : MonoBehaviour
     [field: SerializeField] public MeshRenderer[] childs {  get; private set; }
     [SerializeField] private Slider aimSlider;
     [field: SerializeField] public Transform projectileSpawnPosition;
+    [field: SerializeField] public Transform hommingSpawnPosition;
+    [field: SerializeField] public Transform piercingSpawnPosition;
     [SerializeField] private BulletView bulletView;
     [SerializeField] private AudioSource shootingSound;
     [SerializeField] private AudioSource shootingChargeSound;
@@ -20,6 +22,9 @@ public class TankView : MonoBehaviour
 
     private float aimValue;
     private float aimMaxChargeTime;
+    private bool isGuided;
+
+    public EnemyView Target {  get; private set; }
 
     private void Start()
     {
@@ -36,6 +41,11 @@ public class TankView : MonoBehaviour
     public void SetAimMaxCharge(float aimMaxCharge)
     {
         aimMaxChargeTime = aimMaxCharge;
+    }
+
+    public void SetIsGuided(bool isGuided)
+    {
+        this.isGuided = isGuided;
     }
 
     private void Update()
@@ -77,17 +87,24 @@ public class TankView : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             shootingChargeSound.Play();
+            Target = null;
+
         }
 
         if (Input.GetMouseButton(0))
         {
             aimValue += Time.deltaTime;
             aimSlider.normalizedValue = GetAimValuePecentage();
+            Targeting();
         }
 
         if(Input.GetMouseButtonUp(0))
         {
-            this.tankController.Shoot(GetAimValuePecentage(), bulletView, projectileSpawnPosition);
+            if(Target != null)
+            {
+                Target.IsBeingTarget(false);
+            }
+            this.tankController.Shoot(GetAimValuePecentage(), bulletView);
             shootingSound.Play();
             shootingChargeSound.Stop();
             aimSlider.normalizedValue = 0;
@@ -97,5 +114,58 @@ public class TankView : MonoBehaviour
                 StartCoroutine(shake.Shake(cameraShakeDuration, cameraShakeMagnitude));
             }
         }
+    }
+
+    private void Targeting()
+    {
+        if(!isGuided)
+        {
+            return;
+        }
+
+        var enemies = tankController.GetEnemies();
+
+        float closestDistance = float.MaxValue;
+
+        Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0);
+
+        foreach(var enemy in enemies)
+        {
+            if(IsObjectVisible(Camera.main, enemy))
+            {
+                Vector3 screenPosition = Camera.main.WorldToScreenPoint(enemy.transform.position);
+
+                // Calcular a distância até o centro da tela
+                float distance = Vector2.Distance(screenPosition, screenCenter);
+
+                // Verificar se essa distância é a menor encontrada até agora
+                if (distance < closestDistance)
+                {
+                    if(Target != null)
+                    {
+                        Target.IsBeingTarget(false);
+                    }
+
+                    closestDistance = distance;
+                    Target = enemy;
+                }
+            }
+        }
+        
+        if(Target != null)
+        {
+            Target.IsBeingTarget(true);
+        }
+    }
+
+    private bool IsObjectVisible(Camera camera, EnemyView enemy)
+    {
+        Vector3 viewportPosition = camera.WorldToViewportPoint(enemy.transform.position);
+
+        bool isVisible = viewportPosition.x >= 0 && viewportPosition.x <= 1 &&
+                         viewportPosition.y >= 0 && viewportPosition.y <= 1 &&
+                         viewportPosition.z > 0;
+
+        return isVisible;
     }
 }

@@ -11,4 +11,9 @@ public class Tank
     public float MinShootingForce = 15f;
     public float MaxShooingForce = 30f;
     public float MaxChargeTime = 0.75f;
+    public float BlastRadious = 0.2f;
+    public int Piercing = 0;
+    public int Damage = 10;
+    public bool IsHommingMissle = false;
+    public bool AffectedByGravity = true;
 }
