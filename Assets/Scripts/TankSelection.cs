@@ -10,7 +10,7 @@ public class TankSelection : MonoBehaviour
     {
         Debug.Log("Green Tank");
         
-        tankSpawner.CreateTank(TankTypes.GreenTank);
+        //tankSpawner.CreateTank(TankTypes.GreenTank);
         gameObject.SetActive(false);
     }
 
@@ -18,13 +18,13 @@ public class TankSelection : MonoBehaviour
     {
         Debug.Log("Blue Tank");
         gameObject.SetActive(false);
-        tankSpawner.CreateTank(TankTypes.BlueTank);
+        //tankSpawner.CreateTank(TankTypes.BlueTank);
     }
 
     public void SelectRedTank()
     {
         Debug.Log("Red Tank");
         gameObject.SetActive(false);
-        tankSpawner.CreateTank(TankTypes.RedTank);
+        //tankSpawner.CreateTank(TankTypes.RedTank);
     }
 }
