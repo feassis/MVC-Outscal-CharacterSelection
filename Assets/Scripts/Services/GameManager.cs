@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
     private static Tank selectedTank;
     [SerializeField] private TankSpawner spawner;
     [SerializeField] private WaveServices waveService;
+    [SerializeField] private UIService uiService;
+
+    private TankController player;
 
     public static void StartGame(Tank tank)
     {
@@ -17,6 +20,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        spawner.CreateTank(selectedTank, waveService);
+        player = spawner.CreateTank(selectedTank, waveService, uiService);
+        waveService.Init(player);
     }
 }

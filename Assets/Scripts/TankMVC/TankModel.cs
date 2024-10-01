@@ -21,6 +21,9 @@ public class TankModel
     public bool IsHommingMissle { get; private set; }
     public bool AffectedByGravity { get; private set; }
 
+    public int MaxHealth { get; private set; }
+    public int Armor {  get; private set; }
+
 
     public TankModel(Tank tank)
     {
@@ -36,6 +39,8 @@ public class TankModel
         this.Damage = tank.Damage;
         this.IsHommingMissle = tank.IsHommingMissle;
         this.AffectedByGravity = tank.AffectedByGravity;
+        this.MaxHealth = tank.Health;
+        this.Armor = tank.Armor;
     }
 
     public void SetTankController(TankController tankController)

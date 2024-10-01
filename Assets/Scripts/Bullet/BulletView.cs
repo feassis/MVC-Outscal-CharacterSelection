@@ -8,7 +8,22 @@ public class BulletView : MonoBehaviour
 
     private Transform target;
     private float velocity;
-    private const float turningSpeed = 0.008f;
+    private const float turningSpeed = 0.01f;
+
+    private bool shouldDestroyTarget = false;
+
+    public void SetDestroyTarget(bool destroyTarget)
+    {
+        shouldDestroyTarget = destroyTarget;
+    }
+
+    private void OnDestroy()
+    {
+        if(shouldDestroyTarget)
+        {
+            Destroy(target.gameObject);
+        }
+    }
 
     public void SetController(BulletController controller)
     {
@@ -34,7 +49,7 @@ public class BulletView : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Instantiate(explosionParticles, transform.position, Quaternion.identity);
-        Destroy(gameObject);
+        controller.CalculateBlastZone();
     }
 
     private void Update()

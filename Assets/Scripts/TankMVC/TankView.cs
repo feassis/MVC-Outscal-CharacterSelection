@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TankView : MonoBehaviour
+public class TankView : MonoBehaviour, IDamageble
 {
     private TankController tankController;
     private float movement;
@@ -48,6 +48,11 @@ public class TankView : MonoBehaviour
         this.isGuided = isGuided;
     }
 
+    public void TakeDamage(int damage, int piercing)
+    {
+        this.tankController.TakeDamage(damage, piercing);
+    }
+
     private void Update()
     {
         Movement();
@@ -66,7 +71,7 @@ public class TankView : MonoBehaviour
 
         if(rotation != 0)
         {
-            this.tankController.Rotate(rotation, tankController.GetTankModel().RotationSpeed);
+            this.tankController.Rotate(rotation);
         }
     }
     private float GetAimValuePecentage()

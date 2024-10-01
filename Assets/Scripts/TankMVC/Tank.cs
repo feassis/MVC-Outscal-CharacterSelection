@@ -16,4 +16,6 @@ public class Tank
     public int Damage = 10;
     public bool IsHommingMissle = false;
     public bool AffectedByGravity = true;
+    public int Health = 100;
+    public int Armor = 5;
 }

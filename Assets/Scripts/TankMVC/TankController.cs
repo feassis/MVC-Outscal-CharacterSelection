@@ -9,11 +9,17 @@ public class TankController
 
     private Rigidbody rb;
     private WaveServices waveService;
+    private UIService uiService;
 
-    public TankController(TankModel tankModel,TankView tankView, WaveServices waveService)
+    private int currentHP;
+
+    public TankController(TankModel tankModel,TankView tankView, WaveServices waveService, UIService uiService)
     {
         this.tankModel = tankModel;
         this.waveService = waveService;
+        this.uiService = uiService;
+        currentHP = this.tankModel.MaxHealth;
+        this.uiService.UpdateHealth(this.currentHP);
 
         this.tankView = GameObject.Instantiate<TankView>(tankView);
         
@@ -31,11 +37,22 @@ public class TankController
         rb.velocity = tankView.transform.forward * movementSpeed * movement;
     }
 
-    public void Rotate(float rotation, float rotationSpeed)
+    public void Rotate(float rotation)
     {
+        float rotationSpeed = tankModel.RotationSpeed;
         Vector3 vector = new Vector3(0f, rotation * rotationSpeed, 0f);
-        Quaternion deltaRotation = Quaternion.Euler(vector * Time.deltaTime);
-        rb.MoveRotation(rb.rotation * deltaRotation);
+        Quaternion targetRotation = rb.rotation * Quaternion.Euler(vector * Time.deltaTime);
+
+        rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRotation, rotationSpeed));
+    }
+
+    public void TakeDamage(int damage, int piercing)
+    {
+        int processedDamage = damage - Mathf.Max(0,tankModel.Armor - piercing);
+
+        currentHP = Mathf.Max(0, currentHP - processedDamage);
+
+        this.uiService.UpdateHealth(this.currentHP);
     }
 
     public List<EnemyView> GetEnemies()
@@ -51,6 +68,8 @@ public class TankController
 
         return enemyViews;
     }
+
+    public Transform GetTankTransform() => tankView.transform;
 
     public TankModel GetTankModel()
     {

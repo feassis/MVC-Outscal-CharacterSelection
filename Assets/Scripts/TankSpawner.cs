@@ -11,9 +11,11 @@ public partial class TankSpawner : MonoBehaviour
         
     }
 
-    public void CreateTank(Tank tank, WaveServices waveService)
+    public TankController CreateTank(Tank tank, WaveServices waveService, UIService uiService)
     {
         TankModel tankModel = new TankModel(tank);
-        TankController tankControler = new TankController(tankModel, tankPrefab, waveService);
+        TankController tankControler = new TankController(tankModel, tankPrefab, waveService, uiService);
+
+        return tankControler;
     }
 }
