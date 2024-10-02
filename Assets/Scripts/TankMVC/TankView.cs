@@ -19,6 +19,7 @@ public class TankView : MonoBehaviour, IDamageble
     [SerializeField] private AudioSource shootingChargeSound;
     [SerializeField] private float cameraShakeDuration = 0.4f;
     [SerializeField] private float cameraShakeMagnitude = 10f;
+    [field: SerializeField] public GameObject Mesh;
 
     private float aimValue;
     private float aimMaxChargeTime;

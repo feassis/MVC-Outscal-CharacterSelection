@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
 
 public class EnemyController
@@ -16,6 +17,8 @@ public class EnemyController
 
     private BulletView bulletView;
     private GameObject mortarTarget;
+
+    public Action<EnemyController> OnDeath;
 
     public EnemyController(EnemyModel enemyModel, EnemyView enemyView, Transform spawnPos, TankController tankController, BulletView bulletView, GameObject mortarTarget)
     {
@@ -39,6 +42,12 @@ public class EnemyController
         currentHP = Mathf.Max(0, currentHP - processedDamage);
 
         this.EnemyView.UpdadeHealthBar(currentHP/(float)enemyModel.Health);
+
+        if(currentHP <= 0)
+        {
+            GameObject.Destroy(this.EnemyView.gameObject);
+            OnDeath?.Invoke(this);
+        }
     }
 
     public void SetMovementTarget()

@@ -53,6 +53,12 @@ public class TankController
         currentHP = Mathf.Max(0, currentHP - processedDamage);
 
         this.uiService.UpdateHealth(this.currentHP);
+
+        if(currentHP <= 0)
+        {
+            GameObject.Destroy(tankView.gameObject);
+            uiService.EndGamePopup(false);
+        }
     }
 
     public List<EnemyView> GetEnemies()

@@ -21,6 +21,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         player = spawner.CreateTank(selectedTank, waveService, uiService);
-        waveService.Init(player);
+        waveService.Init(player, uiService);
     }
 }
